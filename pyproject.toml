@@ -101,11 +101,9 @@ omit = ["test/*"]
 [tool.coverage.report]
 fail_under = 30
 skip_empty = true
-#format = "html"
-ignore_errors = true
-
-[tool.coverage.html]
-directory = "coverage_html_report"
+show_missing = true
+xml_output = true
+# format = ["term", "term-missing", "html", "text"]
 
 [tool.mypy]
 ignore_missing_imports = true

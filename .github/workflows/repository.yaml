@@ -163,7 +163,7 @@ jobs:
 
       - name: Install dependencies for tests and coverage
         run: |
-          pip install coverage[toml]
+          pip install coverage[toml] pytest
 
       - name: Run tests with coverage
         run: |

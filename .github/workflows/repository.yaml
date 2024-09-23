@@ -163,7 +163,6 @@ jobs:
 
       - name: Install dependencies for tests and coverage
         run: |
-          pip install -r requirements.txt
           pip install coverage
 
       - name: Run tests with coverage

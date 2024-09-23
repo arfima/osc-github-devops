@@ -94,18 +94,19 @@ testpaths = [
 addopts = "--cov"
 
 [tool.coverage.run]
+parallel = true
 source = ["src"]
 omit = ["test/*"]
-# relative_files = true
+relative_files = true
 
 [tool.coverage.report]
 fail_under = 30
 skip_empty = true
-#format = "html"
 ignore_errors = true
-
-[tool.coverage.html]
-directory = "coverage_html_report"
+exclude_lines = [
+    "pragma: no cover",
+    'if __name__ == "__main__":'
+]
 
 [tool.mypy]
 ignore_missing_imports = true

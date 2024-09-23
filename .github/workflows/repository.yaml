@@ -165,6 +165,10 @@ jobs:
         run: |
           pip install coverage[toml] pytest typer pytest-cov
 
+      - name: Set PYTHONPATH
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/src
+
       - name: Run tests with coverage
         run: |
           coverage run -m pytest --cov=src

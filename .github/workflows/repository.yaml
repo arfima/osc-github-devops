@@ -152,6 +152,29 @@ jobs:
       matrix: ${{ fromJson(needs.python-project.outputs.matrix) }}
     with:
       python_version: ${{ matrix.python-version }}
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: "Install dependencies"
+        run: |
+          pip install -r requirements.txt
+          pip install coverage
+
+      - name: "Run tests with coverage"
+        run: |
+          coverage run -m pytest
+          coverage xml  # Generar el archivo coverage.xml
+
+      - name: "Upload coverage to Codecov"
+        uses: codecov/codecov-action@v3
+        with:
+          file: coverage.xml
 
   github-release:
     name: "Publish GitHub Release"

@@ -52,6 +52,16 @@ jobs:
           fetch-tags: true
           # The semantic-tag-fetch action  currently contains a workaround for this behaviour
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install coverage
+
       - name: "Action: string-extract-with-regex"
         id: string-extract-with-regex
         # yamllint disable-line rule:line-length
@@ -394,14 +404,15 @@ jobs:
       - name: Run tests with coverage
         run: |
           coverage run -m pytest
+          coverage xml
         env:
           COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
 
-      - name: Upload coverage files
+      - name: Upload coverage XML as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{ runner.os }}-${{ matrix.python-version }}
-          path: coverage
+          name: coverage-xml-${{ runner.os }}-${{ matrix.python-version }}
+          path: coverage.xml
 
   coverage-combine:
     needs: test
@@ -410,18 +421,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download coverage files
+      - name: Download all coverage XML files
         uses: actions/download-artifact@v4
         with:
-          name: coverage-*
-          path: coverage
+          name: coverage-xml-*
+          path: coverage_files
 
       - name: Combine coverage reports
         run: |
           pip install coverage
-          coverage combine coverage
+          coverage combine coverage_files
           coverage report
-          coverage xml
+          coverage xml  # Generar el archivo XML combinado
+
+      - name: Upload combined coverage XML as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-coverage-xml
+          path: coverage.xml
 
       - name: Upload to Codecov
         run: bash <(curl -s https://codecov.io/bash)
+        with:
+          file: coverage.xml

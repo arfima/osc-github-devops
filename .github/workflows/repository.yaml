@@ -163,11 +163,11 @@ jobs:
 
       - name: Install dependencies for tests and coverage
         run: |
-          pip install coverage[toml] pytest typer
+          pip install coverage[toml] pytest typer pytest-cov
 
       - name: Run tests with coverage
         run: |
-          coverage run -m pytest
+          coverage run -m pytest --cov=src
           coverage xml  # Generar el archivo XML de cobertura
 
       - name: Upload coverage XML as artifact

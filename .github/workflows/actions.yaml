@@ -441,6 +441,4 @@ jobs:
           path: coverage.xml
 
       - name: Upload to Codecov
-        run: bash <(curl -s https://codecov.io/bash)
-        with:
-          file: coverage.xml
+        run: bash <(curl -s https://codecov.io/bash) -f coverage.xml

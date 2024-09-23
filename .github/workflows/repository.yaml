@@ -141,17 +141,16 @@ jobs:
       artefact_python: "3.11"
       build_tag: ${{ needs.tagging.outputs.build_tag }}
 
-  python-test:
-    name: "Test"
-    uses: os-climate/osc-github-devops/.github/workflows/python-test-matrix.yaml@main
+    python-test:
+    name: "Run Python Tests with Coverage"
     needs:
       - github-workflow-metadata
       - python-project
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.python-project.outputs.matrix) }}
-    with:
-      python_version: ${{ matrix.python-version }}
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - name: Checkout repository

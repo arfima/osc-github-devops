@@ -141,7 +141,7 @@ jobs:
       artefact_python: "3.11"
       build_tag: ${{ needs.tagging.outputs.build_tag }}
 
-    python-test:
+  python-test:
     name: "Run Python Tests with Coverage"
     needs:
       - github-workflow-metadata

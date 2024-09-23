@@ -411,8 +411,13 @@ jobs:
       - name: Upload coverage XML as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-xml-${{ runner.os }}-${{ matrix.python-version }}
+          name: coverage-xml-${{ matrix.python-version }}
           path: coverage.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: coverage.xml
 
   coverage-combine:
     needs: test

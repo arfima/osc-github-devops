@@ -152,6 +152,10 @@ jobs:
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
 
+    permissions:
+      id-token: write  # Grant OIDC permission
+      contents: read
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

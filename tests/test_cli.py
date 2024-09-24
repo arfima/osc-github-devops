@@ -64,6 +64,6 @@ def test_script_completion_run():
 
 def test_wrong(runner):
     """Example for a test that fails."""
-    result = runner.invoke(app, ["wrong"])
+    result = runner.invoke(app, ["wrong"], color=False)
     assert result.exit_code == 2
     assert "Missing argument 'NAME'" in result.stdout

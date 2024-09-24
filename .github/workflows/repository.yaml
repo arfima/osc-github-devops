@@ -190,7 +190,6 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           file: coverage/coverage.xml
-          token: ''
 
   github-release:
     name: "Publish GitHub Release"

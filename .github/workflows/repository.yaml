@@ -172,14 +172,14 @@ jobs:
       - name: Run tests with coverage
         run: |
           coverage run --source=src -m pytest tests/
-          coverage xml  # Generar el archivo XML de cobertura
+          coverage xml -o coverage-reports/coverage.xml  # Create XML report in a specific folder
 
       - name: Upload coverage XML as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-xml-${{ matrix.python-version }}
-          path: coverage.xml
+          path: coverage-reports/coverage.xml
 
       - name: Upload coverage to Codecov
         if: always()

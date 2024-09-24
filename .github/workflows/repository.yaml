@@ -171,8 +171,7 @@ jobs:
 
       - name: Run tests with coverageeee
         run: |
-          coverage run -m pytest tests/
-          coverage xml -o coverage.xml  # Create XML report in a specific folder
+          coverage run -m pytest --cov=src && coverage xml -o coverage.xml
 
       - name: Upload coverage XML as artifact
         if: always()

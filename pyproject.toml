@@ -96,6 +96,7 @@ addopts = "--cov"
 [tool.coverage.run]
 parallel = true
 source = ["src"]
+branch = true
 omit = ["test/*"]
 relative_files = true
 

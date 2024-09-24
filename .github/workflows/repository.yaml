@@ -179,8 +179,12 @@ jobs:
         run: |
           pytest ./tests --cov=src --cov-report xml:coverage/.coverage-${{ matrix.python-version }}.xml
 
-      - name: Verify coverage file exists
-        run: ls -lah coverage/coverage.xml
+      - name: Debug: Verify coverage file exists
+        run: |
+          echo "Checking coverage directory content:"
+          ls -lah coverage/
+          echo "Checking root directory content:"
+          ls -lah
 
       - name: Upload coverage XML as artifact
         if: always()

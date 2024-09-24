@@ -174,19 +174,23 @@ jobs:
       - name: Run tests with coverageeee
         run: |
           coverage run -m pytest --cov=src; coverage xml -o coverage/coverage.xml
+      
+      - name: Verify coverage file exists
+        run: ls -lah coverage/coverage.xml
 
       - name: Upload coverage XML as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-xml-${{ matrix.python-version }}
-          path: coverage.xml
+          path: coverage/coverage.xml
 
       - name: Upload coverage to Codecov
         if: always()
         uses: codecov/codecov-action@v4
         with:
-          file: coverage.xml
+          file: coverage/coverage.xml
+          token: ''
 
   github-release:
     name: "Publish GitHub Release"

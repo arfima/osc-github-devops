@@ -175,12 +175,14 @@ jobs:
           coverage xml  # Generar el archivo XML de cobertura
 
       - name: Upload coverage XML as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-xml-${{ matrix.python-version }}
           path: coverage.xml
 
       - name: Upload coverage to Codecov
+        if: always()
         uses: codecov/codecov-action@v3
         with:
           file: coverage.xml

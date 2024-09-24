@@ -173,8 +173,8 @@ jobs:
 
       - name: Run tests with coverageeee
         run: |
-          coverage run -m pytest --cov=src; coverage xml -o coverage/coverage.xml
-      
+          pytest ./tests --cov=src --cov-report html --cov-report xml:coverage/coverage.xml
+
       - name: Verify coverage file exists
         run: ls -lah coverage/coverage.xml
 

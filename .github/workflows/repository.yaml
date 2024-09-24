@@ -169,9 +169,9 @@ jobs:
         run: |
           pip install .
 
-      - name: Run tests with coverage
+      - name: Run tests with coverageeee
         run: |
-          coverage run --source=src -m pytest tests/
+          coverage run -m pytest tests/
           coverage xml -o coverage.xml  # Create XML report in a specific folder
 
       - name: Upload coverage XML as artifact

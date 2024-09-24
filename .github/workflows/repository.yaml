@@ -191,6 +191,7 @@ jobs:
         with:
           file: coverage/coverage.xml
           fail_ci_if_error: true
+          use_oidc: true
 
   github-release:
     name: "Publish GitHub Release"

@@ -177,7 +177,7 @@ jobs:
 
       - name: Run tests with coverageeee
         run: |
-          pytest ./tests --cov=src --cov-report html --cov-report xml:coverage/coverage.xml
+          pytest ./tests --cov=src --cov-report xml:coverage/.coverage-${{ matrix.python-version }}.xml
 
       - name: Verify coverage file exists
         run: ls -lah coverage/coverage.xml
@@ -186,30 +186,25 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-xml-${{ matrix.python-version }}
-          path: coverage/coverage.xml
+          name: coverage-${{ matrix.python-version }}
+          path: coverage/.coverage-${{ matrix.python-version }}.xml
 
-  coverage-combine:
-    needs: [python-test]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: coverage-*
-
-      - name: Install coverage and combine
+      - name: Combine coverage reports
+        if: always()
         run: |
           pip install coverage[toml]
           coverage combine coverage/
 
       - name: Generate combined coverage report
+        if: always()
         run: coverage xml -o coverage/coverage-combined.xml
 
+      - name: Verify combined coverage file exists
+        if: always()
+        run: ls -lah coverage/
+
       - name: Upload combined coverage XML as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-combined

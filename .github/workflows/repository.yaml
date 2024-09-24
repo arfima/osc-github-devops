@@ -189,11 +189,37 @@ jobs:
           name: coverage-xml-${{ matrix.python-version }}
           path: coverage/coverage.xml
 
-      - name: Upload coverage to Codecov
+  coverage-combine:
+    needs: [python-test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-*
+
+      - name: Install coverage and combine
+        run: |
+          pip install coverage[toml]
+          coverage combine coverage/
+
+      - name: Generate combined coverage report
+        run: coverage xml -o coverage/coverage-combined.xml
+
+      - name: Upload combined coverage XML as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-combined
+          path: coverage/coverage-combined.xml
+
+      - name: Upload combined coverage to Codecov
         if: always()
         uses: codecov/codecov-action@v4
         with:
-          file: coverage/coverage.xml
+          file: coverage/coverage-combined.xml
           fail_ci_if_error: true
           use_oidc: true
 

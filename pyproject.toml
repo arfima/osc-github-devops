@@ -94,6 +94,7 @@ testpaths = [
 addopts = "--cov"
 
 [tool.coverage.run]
+data_file = "coverage/.coverage"
 parallel = true
 source = ["src"]
 omit = ["test/*"]

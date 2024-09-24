@@ -169,9 +169,11 @@ jobs:
         run: |
           pip install .
 
+      - run: mkdir coverage
+
       - name: Run tests with coverageeee
         run: |
-          coverage run -m pytest --cov=src; coverage xml -o coverage.xml
+          coverage run -m pytest --cov=src; coverage xml -o coverage/coverage.xml
 
       - name: Upload coverage XML as artifact
         if: always()

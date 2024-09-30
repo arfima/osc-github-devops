@@ -33,8 +33,17 @@ runs:
           exit 1
         fi
 
+        if [ -f ./resources/setup.py ]; then
+          cd ./resources
+          pip install -q --upgrade pip
+          pip install --upgrade -q setuptools
+          PROJECT_VERSION_SP=$(python ./setup.py --version)
+          echo "Version from setup.py is: $PROJECT_VERSION_SP"
+          cd -
+        fi
+
         # Extract project version from pyproject.toml
-        PROJECT_VERSION=$(grep -E '^version = ".*"$' pyproject.toml | awk '{print $3}' | sed 's:"::g')
+        PROJECT_VERSION=$(pdm show --version)
         echo "Version from pyproject.toml: $PROJECT_VERSION"
         echo "project_version=$PROJECT_VERSION" >> "$GITHUB_OUTPUT"
 

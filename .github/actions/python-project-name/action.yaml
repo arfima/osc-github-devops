@@ -29,7 +29,17 @@ runs:
         fi
 
         if [ -f pyproject.toml ]; then
-          PYTHON_PROJECT_NAME=$(grep -E '^name = ".*"$' pyproject.toml | awk '{print $3}' | sed 's:"::g')
+          PYTHON_PROJECT_NAME=$(pdm show --name)
+          echo "project name from pyproject is: $PYTHON_PROJECT_NAME"
+        fi
+
+        if [ -f ./resources/setup.py ]; then
+          cd ./resources
+          pip install -q --upgrade pip
+          pip install --upgrade -q setuptools
+          PYTHON_PROJECT_NAME_SP=$(python ./setup.py --name)
+          echo "project name from setup.py is: $PYTHON_PROJECT_NAME_SP"
+          cd -
         fi
 
         # ToDo: get project name from other files
